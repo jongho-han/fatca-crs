@@ -1,34 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FATCA·CRS 본인확인 화면</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;display=swap">
+<title>FATCA·CRS 미리보기 모음</title>
+<!-- 미리보기 모음(반입 대상 아님). 각 시나리오를 iframe 으로 띄운다 -->
 <style>
-  :root { --p: #0B6E5E; }
-  * { box-sizing: border-box; }
-  body { margin: 0; min-height: 100vh; font-family: 'Noto Sans KR', sans-serif; background: #F5F7F7; color: #1A1F1E; display: flex; align-items: center; justify-content: center; padding: 40px 16px; }
-  main { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 24px; }
-  h1 { margin: 0; font-size: 26px; }
-  p { margin: 0; color: #5B6664; line-height: 1.6; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-  a.card { display: flex; flex-direction: column; gap: 8px; padding: 24px; background: #fff; border: 1px solid #DDE3E2; border-radius: 14px; text-decoration: none; color: inherit; }
-  a.card:hover, a.card:focus-visible { border-color: var(--p); box-shadow: 0 0 0 3px rgba(0,199,169,.25); outline: none; }
-  a.card b { font-size: 18px; color: var(--p); }
-  a.card span { font-size: 14px; color: #5B6664; line-height: 1.6; }
+body{margin:0;padding:24px;font-family:'Malgun Gothic',sans-serif;background:#f4f6f6;color:#222}
+h1{font-size:22px;margin:0 0 6px} h2{font-size:18px;margin:32px 0 12px} p{margin:0;color:#555}
+.grid{display:flex;flex-wrap:wrap;gap:20px}
+figure{margin:0;background:#fff;border:1px solid #d9dedd;padding:10px}
+figcaption{font-size:13px;margin-bottom:8px;font-weight:bold}
+iframe{border:1px solid #e3e6e6;display:block;background:#fff}
 </style>
 </head>
 <body>
-<main>
-  <div>
-    <h1>FATCA·CRS 본인확인</h1>
-    <p>본인확인서 작성 → 증빙서류 첨부 → 본인인증 3단계 화면입니다.</p>
-  </div>
-  <div class="grid">
-    <a class="card" href="app/"><b>앱 (모바일)</b><span>모바일 앱·웹뷰용 화면. 국가 선택 바텀시트, 촬영/앨범 첨부.</span></a>
-    <a class="card" href="web/"><b>웹 (인터넷고객창구 PC)</b><span>PC 레이어팝업 화면. 테이블형 입력폼, 파일찾기 첨부.</span></a>
-  </div>
-</main>
+<h1>FATCA·CRS 본인확인서 미리보기</h1>
+<p>모바일 MA-0087P, 인터넷창구 ICM_110_P01. 서버 호출과 알림만 가짜이고, 값은 모두 예시입니다.</p>
+<h2>모바일 (MA-0087P)</h2>
+<div class="grid" id="m"></div>
+<h2>인터넷창구 (ICM_110_P01)</h2>
+<div class="grid" id="w"></div>
+<script>
+var M = ["기본(①·② 아니오)", "미국인 · 번호 미입력", "일본+중국 · 기타 사유", "거주지국 선택 팝업", "번호·사유 없이 다음 → 알림", "닫기 확인",
+	"외국인(국적 선택)", "국가 검색 '베트'", "미국 번호 입력 → 증빙", "+ 납세자번호 증명서 첨부", "일본 · 미발급 → 증빙(선택)", "모두 아니오 → 증빙(필수)·종류 선택", "미국 번호 미취득 → 증빙 2건 필수"];
+var W = ["기본(①·② 아니오)", "미국인 · 번호 미입력", "미국 번호 입력 → 증빙", "+ 납세자번호 증명서 첨부", "일본 · 미발급 → 증빙(선택)", "외국인(국적 선택)",
+	"일본+중국 · 기타 사유", "모두 아니오 → 증빙 · 종류 선택", "미국 번호 미취득 → 증빙 2건 필수"];
+function add(box, file, list, w, h) {
+	list.forEach(function (t, i) {
+		var f = document.createElement("figure");
+		f.innerHTML = '<figcaption>s=' + (i + 1) + ' ' + t + '</figcaption><iframe id="' + box + (i + 1) + '" src="' + file + '?s=' + (i + 1) + '" width="' + w + '" height="' + h + '" title="' + t + '"></iframe>';
+		document.getElementById(box).appendChild(f);
+	});
+}
+add("m", "preview-m.html", M, 390, 844);
+add("w", "preview-w.html", W, 1000, 900);
+// 모바일 미리보기가 알려 주는 내용 높이에 맞춘다
+window.addEventListener("message", function (e) {
+	var d = e.data || {};
+	if (d.fatcaPreview && d.h) { var f = document.getElementById(d.fatcaPreview); if (f) { f.height = Math.max(844, d.h); } }
+});
+</script>
 </body>
 </html>

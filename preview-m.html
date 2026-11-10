@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>FATCA 모바일 미리보기</title>
+<!-- 실제 MA-0087P.jsp·MA-0087P.js로 만든 미리보기(반입 대상 아님). 서버 호출·알림 팝업만 가짜, 값은 모두 예시 -->
+<link rel="stylesheet" href="assets/m/mcc/pub/www/css-pub/font.css">
+<link rel="stylesheet" href="assets/m/mcc/pub/www/css-pub/m_common.css">
+<link rel="stylesheet" href="assets/m/mcc/pub/www/css-pub/dgb-reset.css">
+<link rel="stylesheet" href="assets/m/mcc/pub/www/css-pub/dgb-common.css">
+<link rel="stylesheet" href="assets/m/mcc/pub/www/css-pub/dgb-layout.css">
+<link rel="stylesheet" href="assets/m/mcc/pub/www/css-pub/dgb-form.css">
+<link rel="stylesheet" href="assets/m/mcc/pub/www/css-pub/dgb-button.css">
+<link rel="stylesheet" href="assets/m/mcc/pub/www/css-pub/dgb-tab.css">
+<link rel="stylesheet" href="assets/m/mcc/pub/www/css-pub/dgb-table.css">
+<link rel="stylesheet" href="assets/m/mcc/pub/www/css-pub/dgb-pop.css">
+<link rel="stylesheet" href="assets/m/mcc/pub/www/css-pub/dgb-content.css">
+<link rel="stylesheet" href="assets/m/mcc/pub/www/css-pub/dgb-style.css">
+</head>
+<body>
+
+
+<div class="full-pop-wrap" id="MA0087P" style="display:none">
+<div class="full-pop">
+<header>
+<h1>FATCA·CRS 본인확인서</h1>
+</header>
+<div class="full-pop-container">
+<div class="full-pop-con d-scroll">
+<!-- 1단계: 본인확인서 작성 -->
+<div id="MA0087P_step1">
+
+<div class="top-guide mb20">
+<p class="txt">「국제조세조정에 관한 법률」에 따라<br><em>대한민국 외 국가의 납세의무 여부</em>를 확인합니다.</p>
+</div>
+
+<!-- 1. 고객 인적사항 -->
+<h2 class="tit-st01">1. 고객 인적사항</h2>
+<div class="box-b-line">
+<ul class="con-list">
+<li><span>성명</span><span class="txt-bk" id="MA0087P_custNm"></span></li>
+<li><span>생년월일</span><span class="txt-bk" id="MA0087P_custBirth"></span></li>
+<li><span>국적</span><span class="txt-bk" id="MA0087P_natTxt"></span></li>
+<li><span>주소</span><span class="txt-bk" id="MA0087P_custAddr"></span></li>
+<li><span>전화번호</span><span class="txt-bk" id="MA0087P_custHp"></span></li>
+</ul>
+</div>
+<!-- 국적은 고정(내국인 = 대한민국). 외국인은 고객 국적을 받아 올 곳이 없어(CI04에 없음, 정의서 요청) 그때까지 고른다 -->
+<div class="write-wrap mt10" id="MA0087P_natBox" style="display:none">
+<dl class="write">
+<dt>국적(외국인 고객은 국적을 선택해 주세요)</dt>
+<dd><button type="button" class="select wide" title="국적 선택" id="MA0087P_nat" data-val="">국가 선택</button></dd>
+</dl>
+</div>
+<p class="txt-spe mt10">성명·생년월일·국적·주소·전화번호는 고객님의 계약 정보로 자동 입력됩니다.</p>
+
+<!-- 2. 고객 확인사항 -->
+<h2 class="tit-st01 mt30">2. 고객 확인사항</h2>
+<div class="write-wrap">
+<dl class="write">
+<dt>① 미국 세법상 미국인에 해당하나요?</dt>
+<dd>
+<div class="radio-wrap radio-button radio-button-2">
+<label><input type="radio" name="MA0087P_us-have-con" value="1" data-in="MA0087P_usCon">예</label>
+<label><input type="radio" name="MA0087P_us-have-con" value="0">아니오</label>
+</div>
+<div class="radio-con-wrap">
+<div class="radio-con" id="MA0087P_usCon">
+<p class="mb10">해당되는 사항을 선택해 주세요.</p>
+<ul class="list-line mar-l-0 label-w100" id="MA0087P_usType">
+<li><label><input type="checkbox" value="0">미국시민권자(이중국적자 포함)</label></li>
+<li><label><input type="checkbox" value="1">미국영주권자</label></li>
+<li><label><input type="checkbox" value="2">미국거주자</label></li>
+</ul>
+</div>
+</div>
+</dd>
+<dt>② 대한민국 외 국가의 조세목적상 거주자인가요?</dt>
+<dd>
+<div class="radio-wrap radio-button radio-button-2">
+<label><input type="radio" name="MA0087P_res" value="1">예</label>
+<label><input type="radio" name="MA0087P_res" value="0">아니오</label>
+</div>
+</dd>
+</dl>
+</div>
+<p class="txt-spe mt10" id="MA0087P_noTaxGuide">국적이 한국이고 ①, ②가 모두 '아니오'이면 납세자 정보는 작성하지 않아도 됩니다.</p>
+
+<!-- ③ 영문성명 -->
+<div class="write-wrap mt10" id="MA0087P_engNameBox">
+<dl class="write">
+<dt>③ 영문성명</dt>
+<dd>
+<div class="form-wrap">
+<input type="text" class="eng-only" id="MA0087P_lastNm" title="영문 성" placeholder="성(Last Name)" maxlength="50" autocapitalize="characters">
+<input type="text" class="eng-only" id="MA0087P_firstNm" title="영문 이름" placeholder="이름(First Name)" maxlength="50" autocapitalize="characters">
+</div>
+</dd>
+</dl>
+</div>
+<p class="txt-spe mt10" id="MA0087P_engNameGuide">국적이 한국이 아니거나 ①, ② 중 하나라도 '예'이면 필수입니다. 영문·숫자만 입력할 수 있습니다.</p>
+
+<!-- 3. 납세자 정보 -->
+<div id="MA0087P_taxBox">
+<h2 class="tit-st01 mt30">3. 납세자 정보</h2>
+<p class="txt-spe mb10">해외 거주지국과 납세자번호(TIN)를 입력해 주세요. 납세자번호가 없으면 사유를 선택하고, 거주지국이 여러 곳이면 모두 입력해 주세요.</p>
+
+<!-- 거주지국 1·2 (2는 '거주지국 추가'를 누르면 보임) -->
+<div class="write-wrap mt10 res-box" id="MA0087P_res1" data-no="1">
+<div class="tit-wrap">
+<h3 class="tit-st02">거주지국 1</h3>
+</div>
+<dl class="write">
+<dt>거주지국</dt>
+<dd><button type="button" class="select wide res-nat" title="거주지국 선택" data-val="">국가 선택</button></dd>
+<dt>영문주소(우편번호 포함)</dt>
+<dd><textarea class="eng-only res-addr" rows="2" title="영문주소" placeholder="Street, City, State, ZIP Code" maxlength="200"></textarea></dd>
+<dt>납세자번호(TIN: SSN 또는 ITIN)</dt>
+<dd><input type="text" class="res-tin" title="납세자번호" placeholder="영문·숫자·하이픈" maxlength="30"></dd>
+<dt class="res-rsn-row">납세자번호가 없다면 사유를 선택해 주세요</dt>
+<dd class="res-rsn-row">
+<div class="res-rsn">
+<div class="radio-wrap radio-button radio-button-2">
+<label><input type="radio" name="MA0087P_rsn1" value="0">미발급 국가</label>
+<label><input type="radio" name="MA0087P_rsn1" value="1">미요구 국가</label>
+</div>
+<div class="radio-wrap radio-button radio-button-2">
+<label><input type="radio" name="MA0087P_rsn1" value="2">미취득</label>
+<label><input type="radio" name="MA0087P_rsn1" value="3">기타</label>
+</div>
+</div>
+<input type="text" class="eng-only res-etc mt5" title="기타 사유" placeholder="기타 선택 시 사유를 입력해 주세요" maxlength="100" disabled>
+</dd>
+</dl>
+</div>
+
+<div class="write-wrap mt10 res-box" id="MA0087P_res2" data-no="2" style="display:none">
+<div class="tit-wrap">
+<h3 class="tit-st02">거주지국 2</h3>
+<button type="button" class="sbtn btn-st07" id="MA0087P_btnResDel">삭제</button>
+</div>
+<dl class="write">
+<dt>거주지국</dt>
+<dd><button type="button" class="select wide res-nat" title="거주지국 선택" data-val="">국가 선택</button></dd>
+<dt>영문주소(우편번호 포함)</dt>
+<dd><textarea class="eng-only res-addr" rows="2" title="영문주소" placeholder="Street, City, State, ZIP Code" maxlength="200"></textarea></dd>
+<dt>납세자번호(TIN: SSN 또는 ITIN)</dt>
+<dd><input type="text" class="res-tin" title="납세자번호" placeholder="영문·숫자·하이픈" maxlength="30"></dd>
+<dt class="res-rsn-row">납세자번호가 없다면 사유를 선택해 주세요</dt>
+<dd class="res-rsn-row">
+<div class="res-rsn">
+<div class="radio-wrap radio-button radio-button-2">
+<label><input type="radio" name="MA0087P_rsn2" value="0">미발급 국가</label>
+<label><input type="radio" name="MA0087P_rsn2" value="1">미요구 국가</label>
+</div>
+<div class="radio-wrap radio-button radio-button-2">
+<label><input type="radio" name="MA0087P_rsn2" value="2">미취득</label>
+<label><input type="radio" name="MA0087P_rsn2" value="3">기타</label>
+</div>
+</div>
+<input type="text" class="eng-only res-etc mt5" title="기타 사유" placeholder="기타 선택 시 사유를 입력해 주세요" maxlength="100" disabled>
+</dd>
+</dl>
+</div>
+
+<div class="button-section mt10" id="MA0087P_btnResAddWrap">
+<button type="button" class="mbtn btn-st03" id="MA0087P_btnResAdd">+ 거주지국 추가(최대 2개)</button>
+</div>
+</div>
+
+</div>
+<!-- 2단계: 증빙서류 첨부(CASE 문서 11-05) — 납세자번호 증명서: 번호를 적은 거주지국이 있거나 미국 번호를 비웠을 때(그 밖은 숨김) /
+세법상 거주지 증빙: ①·② 둘 다 아니오이거나 미국 번호를 비웠을 때 필수, 그 밖은 선택(첨부가 원칙, 없어도 진행) -->
+<div id="MA0087P_step2" style="display:none">
+<div class="top-guide mb20">
+<p class="txt"><em>증빙서류 사진</em>을 첨부해 주세요.<br>필수 서류를 등록해야 다음 단계로 넘어갈 수 있습니다.</p>
+</div>
+
+<div class="tit-wrap">
+<h2 class="tit-st01">증빙서류</h2>
+<span class="txt-point-1" id="MA0087P_atcCnt"></span>
+</div>
+
+<div class="box-b-line atc-box mt10" data-doc="1">
+<div class="tit-wrap">
+<h3 class="tit-st02">납세자번호 증명서</h3>
+<span class="atc-state"></span>
+</div>
+<p class="txt-spe atc-desc"></p>
+<div class="hbox atc-buttons mt10">
+<button type="button" class="sbtn btn-st03 atc-cam"><span class="ico ico-cam"></span>사진촬영</button>
+<button type="button" class="sbtn btn-st03 atc-gal"><span class="ico ico-gallery"></span>갤러리</button>
+</div>
+<ol class="file-list"></ol>
+</div>
+
+<div class="box-b-line atc-box mt10" data-doc="2">
+<div class="tit-wrap">
+<h3 class="tit-st02">세법상 거주지 증빙</h3>
+<span class="atc-state"></span>
+</div>
+<p class="txt-spe atc-desc"></p>
+<div class="write-wrap mt10">
+<dl class="write">
+<dt>서류 종류</dt>
+<dd><button type="button" class="select wide atc-kind" title="서류 종류 선택" data-val="">서류 종류 선택</button></dd>
+</dl>
+</div>
+<div class="hbox atc-buttons mt10">
+<button type="button" class="sbtn btn-st03 atc-cam"><span class="ico ico-cam"></span>사진촬영</button>
+<button type="button" class="sbtn btn-st03 atc-gal"><span class="ico ico-gallery"></span>갤러리</button>
+</div>
+<ol class="file-list"></ol>
+</div>
+
+<ul class="list-bul mt20">
+<li>서류 전체가 화면에 나오도록 밝은 곳에서 촬영해 주세요.</li>
+<li>글자가 흐리거나 잘리면 다시 요청드릴 수 있습니다.</li>
+<li>지원 확장자 : JPG, JPEG, PNG (서류당 1장, 최대 10MB)</li>
+</ul>
+<input type="file" id="MA0087P_atcCamInput" accept="image/*" capture="" style="display:none" title="사진촬영">
+<input type="file" id="MA0087P_atcFileInput" accept="image/*" style="display:none" title="사진 선택">
+</div>
+
+</div>
+<footer>
+<div class="button-section">
+<button type="button" class="lbtn btn-st02" id="MA0087P_btnPrev" style="display:none">이전</button>
+<button type="button" class="lbtn btn-st01" id="MA0087P_btnNext">다음</button>
+</div>
+</footer>
+</div>
+<button type="button" class="btn-pop-close" id="MA0087P_btnClose">닫기</button>
+</div>
+</div>
+
+
+
+<div id="__dialog_wrap__"></div>
+<p id="pvDone" style="display:none; padding:40px 20px; font-size:16px; text-align:center;"></p>
+<script src="assets/m/mcc/pub/www/js/jquery-2.1.0.js"></script>
+<script src="assets/m/mcc/pub/www/js/ui.js"></script>
+<script>
+var S = (location.search.match(/[?&]s=(\d+)/) || [])[1] || "1";
+var NA = [{DETAILCODE:"AU",CLASSNM:"AUSTRALIA",COMMENT_:"호주"},{DETAILCODE:"BR",CLASSNM:"BRAZIL",COMMENT_:"브라질"},{DETAILCODE:"CA",CLASSNM:"CANADA",COMMENT_:"캐나다"},{DETAILCODE:"CN",CLASSNM:"CHINA",COMMENT_:"중국"},{DETAILCODE:"FR",CLASSNM:"FRANCE",COMMENT_:"프랑스"},{DETAILCODE:"GA",CLASSNM:"GABON",COMMENT_:"가봉"},{DETAILCODE:"GM",CLASSNM:"GAMBIA",COMMENT_:"감비아"},{DETAILCODE:"DE",CLASSNM:"GERMANY",COMMENT_:"독일"},{DETAILCODE:"GH",CLASSNM:"GHANA",COMMENT_:"가나"},{DETAILCODE:"GR",CLASSNM:"GREECE",COMMENT_:"그리스"},{DETAILCODE:"GT",CLASSNM:"GUATEMALA",COMMENT_:"과테말라"},{DETAILCODE:"GY",CLASSNM:"GUYANA",COMMENT_:"가이아나"},{DETAILCODE:"HK",CLASSNM:"HONG KONG",COMMENT_:"홍콩"},{DETAILCODE:"IN",CLASSNM:"INDIA",COMMENT_:"인도"},{DETAILCODE:"ID",CLASSNM:"INDONESIA",COMMENT_:"인도네시아"},{DETAILCODE:"JP",CLASSNM:"JAPAN",COMMENT_:"일본"},{DETAILCODE:"KR",CLASSNM:"KOREA REPUBLIC OF",COMMENT_:"대한민국"},{DETAILCODE:"MY",CLASSNM:"MALAYSIA",COMMENT_:"말레이시아"},{DETAILCODE:"MX",CLASSNM:"MEXICO",COMMENT_:"멕시코"},{DETAILCODE:"MN",CLASSNM:"MONGOLIA",COMMENT_:"몽골"},{DETAILCODE:"NL",CLASSNM:"NETHERLANDS",COMMENT_:"네덜란드"},{DETAILCODE:"NZ",CLASSNM:"NEW ZEALAND",COMMENT_:"뉴질랜드"},{DETAILCODE:"PH",CLASSNM:"PHILIPPINES",COMMENT_:"필리핀"},{DETAILCODE:"RU",CLASSNM:"RUSSIA",COMMENT_:"러시아"},{DETAILCODE:"SG",CLASSNM:"SINGAPORE",COMMENT_:"싱가포르"},{DETAILCODE:"TH",CLASSNM:"THAILAND",COMMENT_:"태국"},{DETAILCODE:"GB",CLASSNM:"UNITED KINGDOM",COMMENT_:"영국"},{DETAILCODE:"US",CLASSNM:"UNITED STATES",COMMENT_:"미국"},{DETAILCODE:"VN",CLASSNM:"VIETNAM",COMMENT_:"베트남"}];
+// 가짜: 서버 호출(D.http.ajax) · 알림 팝업(dialog.js와 같은 마크업) · 팝업 닫기 · 앱 기능
+window.Dcore = {
+isApp : false,
+http : {
+getMobileOs : function () { return "android"; },
+ajax : function (url) {
+var d = $.Deferred();
+var resp = /S01$/.test(url) ? {result:"success", domesticYn:(S === "7" ? "N" : "Y"), codeListNa:NA, custInfo:{name:"홍길동", birth:"1980.01.01", addr:"서울특별시 중구 세종대로 110 (예시)", hpNo:"010-****-5678"}} : {result:"success"};
+setTimeout(function () { d.resolve(resp); }, 5);
+return d.promise();
+}
+}
+};
+function pvLayer(msg, btns) {
+var d = $.Deferred();
+var h = '<div class="pop-wrapper alert" style="display:table; z-index:10002"><div class="layer-bg"></div><div class="layer-pop-wrap"><div class="layer-pop have-foot">'
++ '<div class="layer-container"><div class="layer-con d-scroll"><div>' + msg + '</div></div></div><footer><div class="button-section">';
+$.each(btns, function (i, b) { h += '<button type="button" data-ret="' + b[1] + '">' + b[0] + '</button>'; });
+var $p = $(h + '</div></footer></div></div></div>');
+$p.find("button").on("click", function () { $p.remove(); d.resolve($(this).data("ret")); });
+$("#__dialog_wrap__").append($p);
+return d.promise();
+}
+window.dialog = {
+alert : function (m) { return pvLayer(m, [["확인", "OK"]]); },
+confirm : function (m, y, n) { return pvLayer(m, [[n || "아니오", "NO"], [y || "예", "YES"]]); },
+// 사내 선택 팝업(dialog.js select)과 같은 마크업
+select : function (content, title) {
+var d = $.Deferred();
+var h = '<div class="pop-wrapper" id="__select__" style="display:table"><div class="layer-bg"></div><div class="layer-pop-wrap sel-menu"><div class="layer-pop">'
++ '<header><h1>' + (title || "") + '선택하기</h1></header><div class="layer-container"><div class="layer-con d-scroll"><ul class="list-line mar-l-0 label-w100">';
+$.each(content, function (i, c) { h += '<li data-index="' + i + '"><label><input type="radio" name="_select_radio_" value="' + c.value + '"' + (c.selected ? " checked" : "") + '>' + c.text + '</label></li>'; });
+var $p = $(h + '</ul></div></div><footer class="po-new"><div class="button-section"><button type="button" class="sel-ok">확인</button></div></footer>'
++ '<button type="button" class="btn-pop-close">닫기</button></div></div></div>');
+$p.find(".sel-ok").on("click", function () { var i = $p.find("input:checked").closest("li").data("index"); $p.remove(); d.resolve(i === undefined ? null : content[i]); });
+$p.find(".btn-pop-close").on("click", function () { $p.remove(); d.resolve(null); });
+$("#__dialog_wrap__").append($p);
+return d.promise();
+},
+closePopup : function (ret) {
+$("#MA0087P").hide();
+$("#pvDone").show().text("(미리보기) 팝업이 닫혔습니다 → " + (ret && ret.result === "SUCCESS" ? "다음 단계(KYC)로 진행" : "대출 신청 멈춤"));
+}
+};
+window.M = { execute : function () { return ""; }, media : {} };
+</script>
+<script src="assets/m/mcc/js/view/ma/MA-0087P.js"></script>
+<script>
+$(function () {
+function click(sel) { var e = $(sel)[0]; if (e) e.click(); }
+function type(sel, v) { var e = $(sel)[0]; e.value = v; e.dispatchEvent(new Event("input", {bubbles:true})); }
+function pick(sel, v) {
+$(sel).trigger("click");
+var $i = $("#MA0087P_natPop .nat-list input").filter(function () { return this.value === v; });
+$i[0].click(); $("#MA0087P_natPop .nat-ok").trigger("click");
+}
+function addFile(doc, name, size) {
+var el = $("#MA0087P_atcFileInput")[0]; // 웹: [갤러리] → 파일 선택 칸
+Object.defineProperty(el, "files", {value:[new File([new Uint8Array(size)], name, {type:"image/jpeg"})], configurable:true});
+$(".atc-box[data-doc=" + doc + "] .atc-gal").trigger("click");
+el.dispatchEvent(new Event("change", {bubbles:true}));
+}
+function us() {
+click('input[name="MA0087P_us-have-con"][value="1"]'); click("#MA0087P_usType input[value=0]");
+type("#MA0087P_lastNm", "HONG"); type("#MA0087P_firstNm", "GILDONG");
+pick("#MA0087P_res1 .res-nat", "US"); type("#MA0087P_res1 .res-addr", "123 Main St, Los Angeles, CA 90012");
+}
+function resJp(rsnOnly) {
+click('input[name="MA0087P_res"][value="1"]');
+type("#MA0087P_lastNm", "HONG"); type("#MA0087P_firstNm", "GILDONG");
+pick("#MA0087P_res1 .res-nat", "JP"); type("#MA0087P_res1 .res-addr", "1-1 Chiyoda, Chiyoda-ku, Tokyo 100-0001");
+if (rsnOnly) click('input[name="MA0087P_rsn1"][value="0"]'); else type("#MA0087P_res1 .res-tin", "123456789012");
+}
+$("#MA0087P").show();
+MA0087P.onInit({bizCd:"08", bizNm:"보험계약대출"});
+setTimeout(function () {
+if (S === "2" || S === "5") us();
+if (S === "3") {
+resJp(false);
+$("#MA0087P_btnResAdd").trigger("click");
+pick("#MA0087P_res2 .res-nat", "CN"); type("#MA0087P_res2 .res-addr", "1 Example Road, Chaoyang, Beijing 100000");
+click('input[name="MA0087P_rsn2"][value="3"]'); type("#MA0087P_res2 .res-etc", "Not issued to non-residents");
+}
+if (S === "4" || S === "8") { click('input[name="MA0087P_res"][value="1"]'); $("#MA0087P_res1 .res-nat").trigger("click"); }
+if (S === "8") { var q = $("#MA0087P_natPop .nat-q")[0]; q.value = "베트"; q.dispatchEvent(new Event("input", {bubbles:true})); }
+if (S === "5") $("#MA0087P_btnNext").trigger("click");
+if (S === "6") $("#MA0087P_btnClose").trigger("click");
+if (S === "9" || S === "10") { us(); type("#MA0087P_res1 .res-tin", "123456789"); $("#MA0087P_btnNext").trigger("click"); }
+if (S === "11") { resJp(true); $("#MA0087P_btnNext").trigger("click"); }
+if (S === "12") $("#MA0087P_btnNext").trigger("click");
+if (S === "13") { us(); click('input[name="MA0087P_rsn1"][value="2"]'); $("#MA0087P_btnNext").trigger("click"); }
+setTimeout(function () {
+if (S === "10") addFile(1, "SSN_증명서.jpg", 1258291);
+if (S === "12") { $(".atc-box[data-doc=2] .atc-kind").trigger("click"); click('#__select__ input[value="1"]'); $("#__select__ .sel-ok").trigger("click"); }
+}, 60);
+setTimeout(reportHeight, 300);
+}, 60);
+// 모음 페이지(iframe) 높이 맞추기: 스크롤 없이 전체가 보이도록 내용 높이를 알린다
+function reportHeight() {
+if (window.parent === window) return;
+var $w = $("#MA0087P");
+var h = $w.find(".full-pop > header").outerHeight() + $w.find(".full-pop-con")[0].scrollHeight + $w.find(".full-pop-container > footer").outerHeight();
+window.parent.postMessage({fatcaPreview:"m" + S, h:Math.ceil(h)}, "*");
+}
+});
+</script>
+</body>
+</html>

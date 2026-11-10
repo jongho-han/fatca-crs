@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>FATCA 인터넷창구 미리보기</title>
+<!-- 실제 ICM_110_P01.jsp·ICM_110_P01.js로 만든 미리보기(반입 대상 아님). 사내 icc CSS, 서버 호출·알림만 가짜, 값은 모두 예시 -->
+<link rel="stylesheet" href="assets/w/icc/css/common.css">
+<link rel="stylesheet" href="assets/w/icc/css/layout.css">
+<link rel="stylesheet" href="assets/w/icc/css/content.css">
+<style>body{background:#e9eded;} #pvAlert{display:none; position:fixed; left:50%; top:40%; transform:translate(-50%,-50%); z-index:200; min-width:360px; padding:24px 28px; background:#fff; border:1px solid #999; box-shadow:0 4px 18px rgba(0,0,0,.25); font-size:15px; white-space:pre-line; text-align:center;}</style>
+</head>
+<body>
+
+
+
+
+<!-- layPop(FATCA·CRS 본인확인서) -->
+<div class="layPopWrap fatcaCrs dim" style="width:900px;" tabindex="0">
+<p class="tit">FATCA·CRS 본인확인서</p>
+<div class="layPopContWrap">
+<div class="layPopCont" style="max-height:calc(100vh - 240px); overflow-y:auto;">
+<!-- step -->
+<div class="stepArea depth3">
+<ul>
+<li class="current" id="fatcaStep1"><span><em>01</em>본인확인서 작성</span></li>
+<li id="fatcaStep2"><span><em>02</em>증빙서류 첨부</span></li>
+<li class="last" id="fatcaStep3"><span><em>03</em>본인인증</span></li>
+</ul>
+</div>
+<!--// step -->
+
+<!-- 1단계: 본인확인서 작성 -->
+<div id="fatcaStep1Box">
+<p class="txtType01">「국제조세조정에 관한 법률」 및 「정기금융정보 자동교환을 위한 조세조약 이행규정」에 따라 대한민국 외 국가의 납세의무 여부를 확인합니다.</p>
+
+<h3>1. 고객 인적사항</h3>
+<div class="tblType02">
+<table>
+<caption>고객 인적사항 : 성명, 생년월일, 국적, 전화번호, 주소</caption>
+<colgroup>
+<col style="width:18%;"><col style="width:32%;"><col style="width:18%;"><col style="width:32%;">
+</colgroup>
+<tbody>
+<tr>
+<th scope="row">성명</th><td id="fatcaCustNm"></td>
+<th scope="row">생년월일</th><td id="fatcaCustBirth"></td>
+</tr>
+<tr>
+<th scope="row">국적</th>
+<td>
+<span id="fatcaNatTxt" style="font-size:16px;"></span>
+<!-- 국적은 고정(내국인 = 대한민국). 외국인은 고객 국적을 받아 올 곳이 없어(CI04에 없음, 정의서 요청) 그때까지 고른다 -->
+<select id="fatcaNat" title="국적 선택" style="width:200px; display:none;"></select>
+</td>
+<th scope="row">전화번호</th><td id="fatcaCustHp"></td>
+</tr>
+<tr>
+<th scope="row">주소</th><td colspan="3" id="fatcaCustAddr"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="txtType01 mt10">※ 계약 정보로 자동 입력됩니다. 외국인 고객은 국적을 선택해 주십시오.</p>
+
+<h3 class="mt30">2. 고객 확인사항</h3>
+<div class="tblType02">
+<table>
+<caption>고객 확인사항 : 미국인 해당 여부, 해외 조세목적상 거주자 여부, 영문성명</caption>
+<colgroup>
+<col style="width:40%;"><col style="width:60%;">
+</colgroup>
+<tbody>
+<tr>
+<th scope="row">① 미국 세법상 미국인에 해당합니까?</th>
+<td>
+<input type="radio" id="fatcaUsY" name="fatcaUs" value="1"><label for="fatcaUsY">예</label>
+<input type="radio" id="fatcaUsN" name="fatcaUs" value="0" class="ml20"><label for="fatcaUsN">아니오</label>
+<div id="fatcaUsTypeBox" class="mt10" style="display:none;">
+<p class="mb5">'예'인 경우 해당되는 사항을 체크하십시오.</p>
+<input type="checkbox" id="fatcaUsType0" name="fatcaUsType" value="0"><label for="fatcaUsType0">미국시민권자(이중국적자 포함)</label>
+<input type="checkbox" id="fatcaUsType1" name="fatcaUsType" value="1" class="ml20"><label for="fatcaUsType1">미국영주권자</label>
+<input type="checkbox" id="fatcaUsType2" name="fatcaUsType" value="2" class="ml20"><label for="fatcaUsType2">미국거주자</label>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row">② 대한민국 외의 조세목적상 해외 거주자가 있습니까?</th>
+<td>
+<input type="radio" id="fatcaResY" name="fatcaRes" value="1"><label for="fatcaResY">예</label>
+<input type="radio" id="fatcaResN" name="fatcaRes" value="0" class="ml20"><label for="fatcaResN">아니오</label>
+</td>
+</tr>
+<tr id="fatcaEngNameRow" style="display:none;">
+<th scope="row">③ 영문성명</th>
+<td>
+<input type="text" class="fatca-eng" id="fatcaLastNm" title="영문 성" placeholder="성 (LAST NAME)" maxlength="50" style="width:200px;">
+<input type="text" class="fatca-eng" id="fatcaFirstNm" title="영문 이름" placeholder="이름 (FIRST NAME)" maxlength="50" style="width:200px;">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="txtType01 mt10">※ 국적이 한국이 아니거나 ①, ② 중 하나라도 '예'인 경우 영문성명과 납세자 정보를 반드시 작성해야 합니다.</p>
+<p class="txtType01" id="fatcaNoTaxGuide">※ 국적이 한국이고 ①, ②가 모두 '아니오'인 경우 납세자 정보는 작성하지 않아도 됩니다.</p>
+
+<!-- 3. 납세자 정보 -->
+<div id="fatcaTaxBox" style="display:none;">
+<h3 class="mt30">3. 납세자 정보</h3>
+<div class="noticeListBox">
+<ul class="noticeList">
+<li>해외 거주지국, 영문주소, 조세목적상 거주지국 및 납세자번호(TIN)를 작성해 주십시오. (납세자번호가 없으면 미기재 사유를 선택해 주십시오)</li>
+<li>한국 이외의 조세목적상 거주지국이 1개 이상인 경우 해당 국가를 모두 작성해 주십시오.</li>
+<li>영문주소는 우편번호를 포함하여 작성해 주십시오.</li>
+</ul>
+</div>
+<div class="tblType02 fatca-res" id="fatcaRes1" data-no="1">
+<table>
+<caption>거주지국 1 : 거주지국, 영문주소, 납세자번호, 납세자번호 미기재 사유</caption>
+<colgroup>
+<col style="width:18%;"><col style="width:32%;"><col style="width:18%;"><col style="width:32%;">
+</colgroup>
+<tbody>
+<tr>
+<th scope="row">거주지국 1</th>
+<td><select class="fatca-res-nat" title="거주지국 1 선택" style="width:200px;"></select></td>
+<th scope="row">영문주소</th>
+<td><input type="text" class="fatca-eng fatca-res-addr" title="거주지국 1 영문주소" placeholder="Street, City, State, ZIP Code" maxlength="200" style="width:95%;"></td>
+</tr>
+<tr>
+<th scope="row">납세자번호<br>(TIN: SSN 또는 ITIN)</th>
+<td colspan="3"><input type="text" class="fatca-res-tin" title="거주지국 1 납세자번호" maxlength="30" style="width:250px;"></td>
+</tr>
+<tr class="fatca-res-rsn-row">
+<th scope="row">납세자번호<br>미기재 사유</th>
+<td colspan="3" class="fatca-res-rsn">
+<input type="radio" id="fatcaRsn1_0" name="fatcaRsn1" value="0"><label for="fatcaRsn1_0">미발급 국가</label>
+<input type="radio" id="fatcaRsn1_1" name="fatcaRsn1" value="1" class="ml20"><label for="fatcaRsn1_1">미요구 국가</label>
+<input type="radio" id="fatcaRsn1_2" name="fatcaRsn1" value="2" class="ml20"><label for="fatcaRsn1_2">미취득</label>
+<input type="radio" id="fatcaRsn1_3" name="fatcaRsn1" value="3" class="ml20"><label for="fatcaRsn1_3">기타</label>
+<div class="mt10"><input type="text" class="fatca-eng fatca-res-etc" title="거주지국 1 기타 사유" placeholder="기타 사유 입력" maxlength="100" style="width:95%;" disabled></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tblType02 fatca-res mt20" id="fatcaRes2" data-no="2" style="display:none;">
+<table>
+<caption>거주지국 2 : 거주지국, 영문주소, 납세자번호, 납세자번호 미기재 사유</caption>
+<colgroup>
+<col style="width:18%;"><col style="width:32%;"><col style="width:18%;"><col style="width:32%;">
+</colgroup>
+<tbody>
+<tr>
+<th scope="row">거주지국 2</th>
+<td><select class="fatca-res-nat" title="거주지국 2 선택" style="width:200px;"></select></td>
+<th scope="row">영문주소</th>
+<td><input type="text" class="fatca-eng fatca-res-addr" title="거주지국 2 영문주소" placeholder="Street, City, State, ZIP Code" maxlength="200" style="width:95%;"></td>
+</tr>
+<tr>
+<th scope="row">납세자번호<br>(TIN: SSN 또는 ITIN)</th>
+<td colspan="3"><input type="text" class="fatca-res-tin" title="거주지국 2 납세자번호" maxlength="30" style="width:250px;"></td>
+</tr>
+<tr class="fatca-res-rsn-row">
+<th scope="row">납세자번호<br>미기재 사유</th>
+<td colspan="3" class="fatca-res-rsn">
+<input type="radio" id="fatcaRsn2_0" name="fatcaRsn2" value="0"><label for="fatcaRsn2_0">미발급 국가</label>
+<input type="radio" id="fatcaRsn2_1" name="fatcaRsn2" value="1" class="ml20"><label for="fatcaRsn2_1">미요구 국가</label>
+<input type="radio" id="fatcaRsn2_2" name="fatcaRsn2" value="2" class="ml20"><label for="fatcaRsn2_2">미취득</label>
+<input type="radio" id="fatcaRsn2_3" name="fatcaRsn2" value="3" class="ml20"><label for="fatcaRsn2_3">기타</label>
+<div class="mt10"><input type="text" class="fatca-eng fatca-res-etc" title="거주지국 2 기타 사유" placeholder="기타 사유 입력" maxlength="100" style="width:95%;" disabled></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="btnAreaR mt10">
+<a href="javascript:void(0);" class="btnWs" id="fatcaBtnResDel" style="display:none;"><span>거주지국 2 삭제</span></a>
+<a href="javascript:void(0);" class="btnWs" id="fatcaBtnResAdd"><span>+ 거주지국 추가</span></a>
+</div>
+</div>
+</div>
+<!--// 1단계 -->
+
+<!-- 2단계: 증빙서류 첨부(CASE 문서 11-05) — 납세자번호 증명서: 번호를 적은 거주지국이 있거나 미국 번호를 비웠을 때(그 밖은 숨김) /
+세법상 거주지 증빙: ①·② 둘 다 아니오이거나 미국 번호를 비웠을 때 필수, 그 밖은 선택(첨부가 원칙, 없어도 진행) -->
+<div id="fatcaStep2Box" style="display:none;">
+<p class="txtType01">필수 증빙서류를 첨부해야 다음 단계로 진행할 수 있습니다.</p>
+<h3>증빙서류 <span style="float:right; font-size:16px;" id="fatcaAtcCnt"></span></h3>
+<div class="tblType01">
+<table>
+<caption>증빙서류 : 서류명, 첨부파일, 상태</caption>
+<colgroup>
+<col style="width:30%;"><col style="width:52%;"><col style="width:18%;">
+</colgroup>
+<thead>
+<tr><th scope="col">서류명</th><th scope="col">첨부파일</th><th scope="col" class="last">상태</th></tr>
+</thead>
+<tbody>
+<tr class="fatca-atc" data-doc="1">
+<td class="al"><span>납세자번호 증명서</span> <span class="fatca-atc-must" style="color:red;">*</span><br><span class="fatca-atc-desc" style="font-size:14px; color:#777;"></span></td>
+<td class="al">
+<a href="javascript:void(0);" class="btnWs fatca-atc-find"><span>파일찾기</span></a>
+<span class="fatca-atc-name">선택된 파일 없음</span>
+<a href="javascript:void(0);" class="btnWs fatca-atc-del" style="display:none;"><span>삭제</span></a>
+</td>
+<td class="last fatca-atc-state"></td>
+</tr>
+<tr class="fatca-atc" data-doc="2">
+<td class="al"><span>세법상 거주지 증빙</span> <span class="fatca-atc-must" style="color:red;">*</span><br><span class="fatca-atc-desc" style="font-size:14px; color:#777;"></span></td>
+<td class="al">
+<select class="fatca-atc-kind" title="세법상 거주지 증빙 서류 종류" style="width:260px;">
+<option value="">서류 종류 선택</option>
+<option value="1">주민등록증(재외국민용 제외)</option>
+<option value="2">운전면허증 / 영주증</option>
+<option value="3">외국인등록증</option>
+<option value="4">거주자증명서</option>
+<option value="5">국내거소신고증 + 출입국관리기록</option>
+</select>
+<div class="mt10">
+<a href="javascript:void(0);" class="btnWs fatca-atc-find"><span>파일찾기</span></a>
+<span class="fatca-atc-name">선택된 파일 없음</span>
+<a href="javascript:void(0);" class="btnWs fatca-atc-del" style="display:none;"><span>삭제</span></a>
+</div>
+</td>
+<td class="last fatca-atc-state"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<input type="file" id="fatcaAtcFile" accept=".jpg,.jpeg,.png,image/jpeg,image/png" title="증빙서류 파일 선택" style="display:none;">
+<div class="noticeListBox mt20">
+<ul class="noticeList">
+<li>첨부 가능 파일 : JPG, JPEG, PNG (서류당 1장, 최대 10MB)</li>
+<li>서류 전체가 보이도록 선명하게 촬영하거나 스캔한 파일을 첨부해 주십시오.</li>
+<li>내용 확인이 어려운 경우 서류를 다시 요청드릴 수 있습니다.</li>
+</ul>
+</div>
+<p id="fatcaAtcMsg" style="color:red; text-align:center;"></p>
+</div>
+<!--// 2단계 -->
+
+<div class="btnArea mt20">
+<a href="javascript:void(0);" class="btnW" id="fatcaBtnCancel"><span>취소</span></a>
+<a href="javascript:void(0);" class="btnW" id="fatcaBtnPrev" style="display:none;"><span>이전</span></a>
+<a href="javascript:void(0);" class="btnN" id="fatcaBtnNext"><span>다음</span></a>
+</div>
+</div>
+</div>
+<a href="javascript:void(0);" class="btnClose" id="fatcaBtnClose" title="팝업 닫기">닫기</a>
+</div>
+<!--// layPop -->
+
+<div id="pvAlert"></div>
+<p id="pvDone" style="display:none; padding:60px; font-size:18px; text-align:center;"></p>
+<script src="assets/w/icc/js/jquery-1.11.3.js"></script>
+<script src="assets/w/icc/js/default.js"></script>
+<script>
+var S = (location.search.match(/[?&]s=(\d+)/) || [])[1] || "1";
+var NA = [{DETAILCODE:"AU",CLASSNM:"AUSTRALIA",COMMENT_:"호주"},{DETAILCODE:"BR",CLASSNM:"BRAZIL",COMMENT_:"브라질"},{DETAILCODE:"CA",CLASSNM:"CANADA",COMMENT_:"캐나다"},{DETAILCODE:"CN",CLASSNM:"CHINA",COMMENT_:"중국"},{DETAILCODE:"FR",CLASSNM:"FRANCE",COMMENT_:"프랑스"},{DETAILCODE:"GA",CLASSNM:"GABON",COMMENT_:"가봉"},{DETAILCODE:"GM",CLASSNM:"GAMBIA",COMMENT_:"감비아"},{DETAILCODE:"DE",CLASSNM:"GERMANY",COMMENT_:"독일"},{DETAILCODE:"GH",CLASSNM:"GHANA",COMMENT_:"가나"},{DETAILCODE:"GR",CLASSNM:"GREECE",COMMENT_:"그리스"},{DETAILCODE:"GT",CLASSNM:"GUATEMALA",COMMENT_:"과테말라"},{DETAILCODE:"GY",CLASSNM:"GUYANA",COMMENT_:"가이아나"},{DETAILCODE:"HK",CLASSNM:"HONG KONG",COMMENT_:"홍콩"},{DETAILCODE:"IN",CLASSNM:"INDIA",COMMENT_:"인도"},{DETAILCODE:"ID",CLASSNM:"INDONESIA",COMMENT_:"인도네시아"},{DETAILCODE:"JP",CLASSNM:"JAPAN",COMMENT_:"일본"},{DETAILCODE:"KR",CLASSNM:"KOREA REPUBLIC OF",COMMENT_:"대한민국"},{DETAILCODE:"MY",CLASSNM:"MALAYSIA",COMMENT_:"말레이시아"},{DETAILCODE:"MX",CLASSNM:"MEXICO",COMMENT_:"멕시코"},{DETAILCODE:"MN",CLASSNM:"MONGOLIA",COMMENT_:"몽골"},{DETAILCODE:"NL",CLASSNM:"NETHERLANDS",COMMENT_:"네덜란드"},{DETAILCODE:"NZ",CLASSNM:"NEW ZEALAND",COMMENT_:"뉴질랜드"},{DETAILCODE:"PH",CLASSNM:"PHILIPPINES",COMMENT_:"필리핀"},{DETAILCODE:"RU",CLASSNM:"RUSSIA",COMMENT_:"러시아"},{DETAILCODE:"SG",CLASSNM:"SINGAPORE",COMMENT_:"싱가포르"},{DETAILCODE:"TH",CLASSNM:"THAILAND",COMMENT_:"태국"},{DETAILCODE:"GB",CLASSNM:"UNITED KINGDOM",COMMENT_:"영국"},{DETAILCODE:"US",CLASSNM:"UNITED STATES",COMMENT_:"미국"},{DETAILCODE:"VN",CLASSNM:"VIETNAM",COMMENT_:"베트남"}];
+// 가짜: 서버 호출 · 기본 alert/confirm(브라우저 창 대신 화면에 그린다 — 줄바꿈 그대로, 누르면 사라짐)
+jQuery.ajax = function (opt) {
+var resp = opt.url.indexOf("S01") > 0 ? {result:"success", domesticYn:(S === "6" ? "N" : "Y"), codeListNa:NA, custInfo:{name:"홍길동", birth:"1980.01.01", addr:"서울특별시 중구 세종대로 110 (예시)", hpNo:"010-****-5678"}} : {result:"success"};
+setTimeout(function () { opt.success(resp); }, 5);
+};
+window.alert = function (m) { $("#pvAlert").text("[알림] " + m).show(); };
+window.confirm = function (m) { $("#pvAlert").text("[확인] " + m + "\n\n(미리보기에서는 '취소'로 처리)").show(); return false; };
+$(document).on("click", "#pvAlert", function () { $(this).hide(); });
+</script>
+<script src="assets/w/icc/js/ICM_110_P01.js"></script>
+<script>
+$(function () {
+function us(tin) {
+$("#fatcaUsY").prop("checked", true).trigger("change");
+$("#fatcaUsType0").prop("checked", true).trigger("change");
+$("#fatcaLastNm").val("HONG"); $("#fatcaFirstNm").val("GILDONG");
+$("#fatcaRes1 .fatca-res-nat").val("US").trigger("change");
+$("#fatcaRes1 .fatca-res-addr").val("123 Main St, Los Angeles, CA 90012").trigger("input");
+if (tin) $("#fatcaRes1 .fatca-res-tin").val("123456789").trigger("input");
+}
+function addFile(doc, name, size) {
+var el = $("#fatcaAtcFile")[0];
+$(".fatca-atc[data-doc=" + doc + "] .fatca-atc-find").trigger("click");
+Object.defineProperty(el, "files", {value:[new File([new Uint8Array(size)], name, {type:"image/jpeg"})], configurable:true});
+$(el).trigger("change");
+}
+fatcaCrs.open({bizCd:"08", bizNm:"보험계약대출"}).then(function (ret) {
+$("#pvDone").show().text("(미리보기) 팝업이 닫혔습니다 → " + (ret === "SUCCESS" ? "다음 단계(KYC)로 진행" : "대출 신청 멈춤"));
+});
+setTimeout(function () {
+if (S === "2") us(false);
+if (S === "3" || S === "4") { us(true); $("#fatcaBtnNext").trigger("click"); }
+if (S === "8") $("#fatcaBtnNext").trigger("click");
+if (S === "9") { us(false); $("#fatcaRsn1_2").prop("checked", true).trigger("change"); $("#fatcaBtnNext").trigger("click"); }
+if (S === "7") {
+$("#fatcaResY").prop("checked", true).trigger("change");
+$("#fatcaLastNm").val("HONG"); $("#fatcaFirstNm").val("GILDONG");
+$("#fatcaRes1 .fatca-res-nat").val("JP").trigger("change");
+$("#fatcaRes1 .fatca-res-addr").val("1-1 Chiyoda, Tokyo 100-0001").trigger("input");
+$("#fatcaRes1 .fatca-res-tin").val("123456789012").trigger("input");
+$("#fatcaBtnResAdd").trigger("click");
+$("#fatcaRes2 .fatca-res-nat").val("CN").trigger("change");
+$("#fatcaRes2 .fatca-res-addr").val("1 Example Road, Beijing 100000").trigger("input");
+$("#fatcaRsn2_3").prop("checked", true).trigger("change");
+$("#fatcaRes2 .fatca-res-etc").val("Not issued to non-residents").trigger("input");
+setTimeout(function () { $(".fatcaCrs .layPopCont").scrollTop(9999); }, 30);
+}
+if (S === "5") {
+$("#fatcaResY").prop("checked", true).trigger("change");
+$("#fatcaLastNm").val("HONG"); $("#fatcaFirstNm").val("GILDONG");
+$("#fatcaRes1 .fatca-res-nat").val("JP").trigger("change");
+$("#fatcaRes1 .fatca-res-addr").val("1-1 Chiyoda, Tokyo 100-0001").trigger("input");
+$("#fatcaRsn1_0").prop("checked", true).trigger("change");
+$("#fatcaBtnNext").trigger("click");
+}
+setTimeout(function () {
+if (S === "4") addFile(1, "SSN_증명서.jpg", 1258291);
+if (S === "8") $(".fatca-atc-kind").val("1").trigger("change");
+}, 60);
+}, 60);
+});
+</script>
+</body>
+</html>
