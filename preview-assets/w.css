@@ -1,0 +1,89 @@
+/* 미리보기 전용(반입 대상 아님) — 사내 인터넷창구 CSS(icc)가 없을 때만 불러온다.
+   색·글꼴·간격은 디자인 캔버스 「FATCA-CRS 인터넷고객창구(PC)」 P1–P5 기준 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
+
+:root { --text: #222222; --muted: #666666; --primary: #0F6B5C; --primary-dark: #0A5246; --point: #1BA79A; --th: #EEF5F3; --line: #D9DEDD; --input: #B9C1BF; --sub: #FAFCFB; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 40px 20px 80px; font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; color: var(--text); font-size: 14px; }
+button, input, select { font-family: inherit; color: inherit; font-size: inherit; }
+h3 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+p { margin: 0; }
+caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+a { color: var(--primary); }
+:focus-visible { outline: 3px solid rgba(27, 167, 154, .5); outline-offset: 2px; }
+
+.mt10 { margin-top: 10px !important; } .mt20 { margin-top: 20px !important; } .mt30 { margin-top: 30px !important; }
+.mb5 { margin-bottom: 5px !important; } .ml20 { margin-left: 20px !important; }
+
+/* 레이어 팝업 */
+.layPopWrap { position: relative; max-width: 100%; margin: 0 auto; background: #FFFFFF; border: 1px solid var(--primary); box-shadow: 0 12px 40px rgba(0, 0, 0, .3); outline: none; }
+.layPopWrap > .tit { height: 64px; display: flex; align-items: center; padding: 0 64px 0 32px; background: var(--primary); color: #FFFFFF; font-size: 22px; font-weight: 700; }
+.btnClose { position: absolute; top: 10px; right: 12px; width: 44px; height: 44px; font-size: 0; color: transparent; background: no-repeat center / 24px;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M18 6L6 18M6 6l12 12'/%3E%3C/svg%3E"); }
+.layPopCont { padding: 28px 36px 36px; }
+
+/* 단계 */
+.stepArea { margin-bottom: 28px; }
+.stepArea ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); }
+.stepArea li { height: 44px; display: flex; align-items: center; justify-content: center; border-left: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+.stepArea li:first-child { border-left: 0; }
+.stepArea li em { font-style: normal; margin-right: 6px; font-weight: 700; }
+.stepArea li em::after { content: "."; }
+.stepArea li.current { background: var(--primary); color: #FFFFFF; font-weight: 700; }
+
+/* 안내 문구 */
+.txtType01 { font-size: 14px; line-height: 1.7; color: var(--muted); }
+#fatcaStep1Box > .txtType01:first-child, #fatcaStep2Box > .txtType01:first-child { display: flex; gap: 8px; margin-bottom: 28px; font-size: 15px; line-height: 1.6; color: var(--text); }
+#fatcaStep1Box > .txtType01:first-child::before, #fatcaStep2Box > .txtType01:first-child::before { content: "▸"; color: var(--point); }
+.noticeListBox { margin-bottom: 10px; }
+.noticeList { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.noticeList li { position: relative; padding-left: 12px; font-size: 13px; line-height: 1.6; color: var(--muted); }
+.noticeList li::before { content: "·"; position: absolute; left: 2px; }
+
+/* 표 */
+.tblType01 table, .tblType02 table { width: 100%; border-collapse: collapse; border-top: 2px solid var(--point); font-size: 14px; }
+.tblType01 th, .tblType02 th { background: var(--th); font-weight: 700; text-align: center; padding: 14px 12px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); line-height: 1.5; word-break: keep-all; }
+.tblType02 th { text-align: left; padding-left: 16px; }
+.tblType01 td, .tblType02 td { padding: 12px 14px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); line-height: 1.6; }
+.tblType01 .last, .tblType01 td:last-child, .tblType02 td:last-child { border-right: 0; }
+.tblType01 td.al { text-align: left; }
+.tblType01 td.last { text-align: center; font-weight: 700; }
+#fatcaUsTypeBox { margin: 10px -14px -12px; padding: 12px 14px; background: var(--sub); border-top: 1px solid var(--line); }
+#fatcaUsTypeBox p { font-size: 13px; color: var(--muted); }
+
+/* 입력 */
+input[type="text"], select { height: 40px; border: 1px solid var(--input); padding: 0 12px; background: #FFFFFF; border-radius: 0; max-width: 100%; vertical-align: middle; }
+select { padding-right: 32px; -webkit-appearance: none; appearance: none; background: #FFFFFF no-repeat right 12px center / 12px;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); }
+input[type="text"]:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(27, 167, 154, .25); }
+input[type="text"]:disabled { background: #F2F4F4; color: #888888; }
+::placeholder { color: #8A9391; }
+input[type="radio"], input[type="checkbox"] { width: 18px; height: 18px; margin: 0 6px 0 0; vertical-align: -4px; accent-color: var(--primary); cursor: pointer; }
+input[type="radio"] + label, input[type="checkbox"] + label { cursor: pointer; line-height: 32px; white-space: nowrap; }
+
+/* 버튼 */
+.btnArea { display: flex; justify-content: center; gap: 8px; }
+.btnAreaR { display: flex; justify-content: flex-end; gap: 8px; }
+.btnW, .btnN { min-width: 120px; height: 48px; padding: 0 24px; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; text-decoration: none; }
+.btnW { border: 1px solid var(--input); background: #FFFFFF; color: var(--text); font-weight: 500; }
+.btnN { border: 1px solid var(--primary); background: var(--primary); color: #FFFFFF; font-weight: 700; }
+.btnN:hover { background: var(--primary-dark); }
+.btnWs { height: 34px; padding: 0 14px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--primary); background: #FFFFFF; color: var(--primary); font-size: 14px; font-weight: 500; text-decoration: none; vertical-align: middle; }
+.fatca-atc-del { border-color: var(--input); color: var(--text); }
+.fatca-atc-name { margin: 0 8px; color: var(--muted); }
+#fatcaAtcMsg { margin-top: 16px; font-weight: 700; }
+#fatcaAtcMsg:empty { display: none; }
+
+@media (max-width: 920px) {
+	body { padding: 0; }
+	.layPopWrap { width: 100% !important; border: 0; }
+	.layPopCont { max-height: none !important; padding: 20px 16px 28px; }
+	.layPopWrap > .tit { font-size: 18px; padding-left: 20px; }
+	.stepArea li { font-size: 13px; }
+	.tblType02 table, .tblType02 tbody, .tblType02 tr, .tblType02 th, .tblType02 td { display: block; width: 100%; }
+	.tblType02 colgroup { display: none; }
+	.tblType02 th, .tblType02 td { border-right: 0; }
+	.tblType02 input[type="text"], .tblType02 select { width: 100% !important; }
+	.tblType02 input[type="text"] + input[type="text"] { margin-top: 8px; }
+	input[type="radio"].ml20, input[type="checkbox"].ml20 { margin-left: 12px !important; }
+}

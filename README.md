@@ -8,8 +8,9 @@
 | `assets/w/icc/js/ICM_110_P01.js` | 인터넷창구 레이어팝업. jQuery 1.11, `$.ajax`, `alert/confirm` |
 | `preview-m.html`, `preview-w.html` | 미리보기(반입 대상 아님). 서버 호출·알림만 가짜. `?s=번호`로 시나리오 선택 |
 | `index.html` | 시나리오 모음(iframe) |
+| `preview-assets/m.css`, `w.css` | 미리보기 전용 대체 CSS. 사내 CSS를 못 불러올 때만(GitHub Pages 등) 붙는다. 디자인 캔버스 기준 |
 
-미리보기는 사내 `assets/m/mcc/pub/...`, `assets/w/icc/css·js` (jQuery, CSS, ui.js/default.js)가 같은 경로에 있어야 제대로 보입니다. 이 저장소에는 없습니다.
+미리보기는 사내 `assets/m/mcc/pub/...`, `assets/w/icc/css·js`(jQuery, CSS, ui.js/default.js)를 먼저 찾습니다. 이 저장소에는 없으므로, 없으면 jQuery는 공개 CDN에서, CSS는 `preview-assets/`의 대체 CSS로 불러옵니다. 사내 환경에서는 사내 파일만 씁니다.
 
 ## 호출
 

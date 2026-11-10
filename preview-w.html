@@ -7,6 +7,18 @@
 <link rel="stylesheet" href="assets/w/icc/css/common.css">
 <link rel="stylesheet" href="assets/w/icc/css/layout.css">
 <link rel="stylesheet" href="assets/w/icc/css/content.css">
+<script>
+// 미리보기 전용: 사내 CSS(icc/css/common.css)를 못 불러오면(GitHub Pages 등) 디자인 기준 대체 CSS를 붙인다
+(function () {
+var l = document.querySelector('link[href*="icc/css/common.css"]'), done = false;
+function add() { if (done) return; done = true; var n = document.createElement("link"); n.rel = "stylesheet"; n.href = "preview-assets/w.css"; document.head.appendChild(n); }
+function ok() { try { return !!(l.sheet && l.sheet.cssRules && l.sheet.cssRules.length); } catch (e) { return true; } }
+if (!l) { add(); return; }
+l.addEventListener("error", add);
+l.addEventListener("load", function () { if (!ok()) add(); });
+window.addEventListener("load", function () { if (!ok()) add(); });
+})();
+</script>
 <style>body{background:#e9eded;} #pvAlert{display:none; position:fixed; left:50%; top:40%; transform:translate(-50%,-50%); z-index:200; min-width:360px; padding:24px 28px; background:#fff; border:1px solid #999; box-shadow:0 4px 18px rgba(0,0,0,.25); font-size:15px; white-space:pre-line; text-align:center;}</style>
 </head>
 <body>
