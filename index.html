@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FATCA·CRS 본인확인 화면</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;display=swap">
+<style>
+  :root { --p: #0B6E5E; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; font-family: 'Noto Sans KR', sans-serif; background: #F5F7F7; color: #1A1F1E; display: flex; align-items: center; justify-content: center; padding: 40px 16px; }
+  main { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 24px; }
+  h1 { margin: 0; font-size: 26px; }
+  p { margin: 0; color: #5B6664; line-height: 1.6; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  a.card { display: flex; flex-direction: column; gap: 8px; padding: 24px; background: #fff; border: 1px solid #DDE3E2; border-radius: 14px; text-decoration: none; color: inherit; }
+  a.card:hover, a.card:focus-visible { border-color: var(--p); box-shadow: 0 0 0 3px rgba(0,199,169,.25); outline: none; }
+  a.card b { font-size: 18px; color: var(--p); }
+  a.card span { font-size: 14px; color: #5B6664; line-height: 1.6; }
+</style>
+</head>
+<body>
+<main>
+  <div>
+    <h1>FATCA·CRS 본인확인</h1>
+    <p>본인확인서 작성 → 증빙서류 첨부 → 본인인증 3단계 화면입니다.</p>
+  </div>
+  <div class="grid">
+    <a class="card" href="app/"><b>앱 (모바일)</b><span>모바일 앱·웹뷰용 화면. 국가 선택 바텀시트, 촬영/앨범 첨부.</span></a>
+    <a class="card" href="web/"><b>웹 (인터넷고객창구 PC)</b><span>PC 레이어팝업 화면. 테이블형 입력폼, 파일찾기 첨부.</span></a>
+  </div>
+</main>
+</body>
+</html>

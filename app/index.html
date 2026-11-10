@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>FATCA·CRS 본인확인 (모바일)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;display=swap">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app" id="app">
+  <div class="topbar">
+    <header class="hd">
+      <button type="button" class="icon-btn" data-action="back" aria-label="뒤로 가기">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <h1>FATCA·CRS 본인확인</h1>
+      <span class="icon-btn" aria-hidden="true"></span>
+    </header>
+    <nav class="stepper" aria-label="진행 단계" id="stepper"></nav>
+  </div>
+
+  <main class="main" id="main" tabindex="-1"></main>
+  <footer class="ft" id="footer"></footer>
+</div>
+
+<!-- 국적(거주지국) 선택 레이어팝업 -->
+<div class="sheet-wrap" id="sheet" hidden>
+  <div class="dim" data-action="sheet-close"></div>
+  <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="grip" aria-hidden="true"><span></span></div>
+    <div class="sheet-hd">
+      <h2 id="sheetTitle">국가 선택</h2>
+      <button type="button" class="icon-btn" data-action="sheet-close" aria-label="닫기">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="sheet-sec">
+      <h3 class="sub">자주 선택하는 국가</h3>
+      <div class="grid2" id="sheetFrequent"></div>
+    </div>
+    <div class="sheet-gap"></div>
+    <div class="sheet-sec">
+      <label for="natSearch" class="sub">그 외 국가 검색</label>
+      <div class="search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="natSearch" type="search" autocomplete="off" placeholder="국가명을 입력해 주세요 (예: 베트남)">
+      </div>
+    </div>
+    <ul class="nat-list" id="sheetList" aria-label="전체 국가"></ul>
+    <div class="sheet-ft">
+      <button type="button" class="btn-primary" data-action="sheet-done">선택 완료</button>
+    </div>
+  </section>
+</div>
+
+<input type="file" id="fileCamera" accept="image/*" capture="environment" hidden>
+<input type="file" id="fileAlbum" hidden>
+
+<script src="../assets/js/fatca-core.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
